@@ -1,4 +1,4 @@
-# Exhibition Tracker
+# ExhibitionQR
 
 A Flutter mobile application for tracking visitor interactions with exhibition exhibits using QR codes and Firebase backend.
 
@@ -8,7 +8,7 @@ A Flutter mobile application for tracking visitor interactions with exhibition e
 - **QR Code Scanning**: Scan QR codes placed at exhibit stations
 - **Visitor Session Tracking**: Track when users start and end their exhibition visit
 - **Data Collection**: Store scan timestamps, exhibit IDs, and visit durations
-- **Authentication**: Support for Google Sign-In and anonymous guest access
+- **Authentication**: Support for admin login and anonymous guest access
 - **Offline Support**: Works offline and syncs data when internet is available
 
 ### Analytics Dashboard
@@ -46,8 +46,8 @@ A Flutter mobile application for tracking visitor interactions with exhibition e
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/exhibition-tracker.git
-cd exhibition-tracker
+git clone https://github.com/excellent-softDev/ExhibitionQR.git
+cd ExhibitionQR
 ```
 
 ### 2. Install Dependencies
@@ -62,7 +62,7 @@ Follow the detailed setup instructions in [FIREBASE_SETUP.md](./FIREBASE_SETUP.m
 
 1. Create a Firebase project
 2. Add Android and iOS apps
-3. Enable Authentication (Google + Anonymous)
+3. Enable Authentication (Email/Password + Anonymous)
 4. Set up Firestore Database
 5. Configure security rules
 6. Add configuration files
@@ -70,6 +70,9 @@ Follow the detailed setup instructions in [FIREBASE_SETUP.md](./FIREBASE_SETUP.m
 ### 4. Run the App
 
 ```bash
+# For Web
+flutter run -d chrome
+
 # For Android
 flutter run
 
@@ -84,30 +87,30 @@ flutter run -d <device-id>
 
 ```
 lib/
-├── main.dart                 # App entry point
-├── firebase_options.dart      # Firebase configuration
-├── models/                   # Data models
-│   └── exhibit.dart         # Exhibit, Visit, Session models
-├── services/                 # Business logic
-│   ├── auth_service.dart    # Authentication
-│   ├── exhibit_service.dart # Exhibit operations
-│   ├── analytics_service.dart # Analytics calculations
-│   └── offline_service.dart # Offline sync
-├── providers/               # State management
-│   ├── user_provider.dart   # User state
-│   └── exhibit_provider.dart # Exhibit state
-├── screens/                  # UI screens
-│   ├── auth_wrapper.dart    # Authentication wrapper
-│   ├── auth_screen.dart     # Login screen
-│   ├── home_screen.dart     # Main dashboard
-│   ├── qr_scanner_screen.dart # QR scanner
-│   ├── visit_history_screen.dart # Visit history
-│   └── analytics_screen.dart # Analytics dashboard
-├── widgets/                 # Reusable widgets
-│   └── loading_widget.dart  # Loading indicators
-└── utils/                   # Utilities
-    ├── constants.dart       # App constants
-    └── error_handler.dart   # Error handling
+|-- main.dart                 # App entry point
+|-- firebase_options.dart      # Firebase configuration
+|-- models/                   # Data models
+|   |-- exhibit.dart         # Exhibit, Visit, Session models
+|-- services/                 # Business logic
+|   |-- auth_service.dart    # Authentication
+|   |-- exhibit_service.dart # Exhibit operations
+|   |-- analytics_service.dart # Analytics calculations
+|   |-- offline_service.dart # Offline sync
+|-- providers/               # State management
+|   |-- user_provider.dart   # User state
+|   |-- exhibit_provider.dart # Exhibit state
+|-- screens/                  # UI screens
+|   |-- auth_wrapper.dart    # Authentication wrapper
+|   |-- auth_screen.dart     # Login screen
+|   |-- home_screen.dart     # Main dashboard
+|   |-- qr_scanner_screen.dart # QR scanner
+|   |-- visit_history_screen.dart # Visit history
+|   |-- analytics_screen.dart # Analytics dashboard
+|-- widgets/                 # Reusable widgets
+|   |-- loading_widget.dart  # Loading indicators
+|-- utils/                   # Utilities
+|   |-- constants.dart       # App constants
+|   |-- error_handler.dart   # Error handling
 ```
 
 ## Configuration
@@ -139,18 +142,21 @@ hall-a-section-1
 
 ### For Visitors
 
-1. **Launch the App**: Open Exhibition Tracker
-2. **Sign In**: Choose Google Sign-In or continue as guest
+1. **Launch the App**: Open ExhibitionQR
+2. **Auto Sign-In**: Automatically signed in as guest for immediate access
 3. **Scan QR Codes**: Point camera at QR codes at exhibit stations
 4. **View History**: Check your visit history in the History tab
 5. **View Analytics**: See exhibition statistics in the Analytics tab
 
 ### For Administrators
 
-1. **Set Up Exhibits**: Create exhibit documents in Firestore
-2. **Generate QR Codes**: Create QR codes with exhibit IDs
-3. **Place QR Codes**: Position QR codes at exhibit stations
-4. **Monitor Analytics**: Track visitor engagement through the dashboard
+1. **Login as Admin**: Use admin credentials to access dashboard
+   - Username: `admin`
+   - Password: `admin123`
+2. **Set Up Exhibits**: Create exhibit documents in Firestore
+3. **Generate QR Codes**: Create QR codes with exhibit IDs
+4. **Place QR Codes**: Position QR codes at exhibit stations
+5. **Monitor Analytics**: Track visitor engagement through the dashboard
 
 ## Data Models
 
@@ -192,7 +198,7 @@ hall-a-section-1
 ## API Reference
 
 ### AuthService
-- `signInWithGoogle()`: Authenticate with Google
+- `signInAsAdmin(username, password)`: Admin authentication
 - `signInAnonymously()`: Guest authentication
 - `signOut()`: Sign out user
 - `getUserData(uid)`: Get user information
@@ -262,4 +268,4 @@ For support and questions:
 
 ---
 
-**Built with ❤️ using Flutter**
+**Built with :heart: using Flutter**

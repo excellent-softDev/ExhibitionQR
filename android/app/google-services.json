@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1028860327492",
+    "project_id": "exhibitionqr-b20b2",
+    "storage_bucket": "exhibitionqr-b20b2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028860327492:android:f26464fe674da2e08aee11",
+        "android_client_info": {
+          "package_name": "com.example.exhibition_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYQRYI35UbzEghJmdXlZkkXZ7HVCXIXLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

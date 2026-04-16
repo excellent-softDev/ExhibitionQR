@@ -181,6 +181,7 @@ class _VisitCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+<<<<<<< HEAD
             if (visit.sessionDuration != null)
               Text(
                 'Total time: ${_formatDuration(visit.sessionDuration)}',
@@ -199,6 +200,8 @@ class _VisitCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           ],
         ),
         trailing: const Icon(Icons.chevron_right),
@@ -254,6 +257,7 @@ class _VisitCard extends StatelessWidget {
                 value: _formatDuration(visit.duration),
               ),
             ],
+<<<<<<< HEAD
             if (visit.sessionDuration != null) ...[
               const SizedBox(height: 8),
               _DetailRow(
@@ -268,6 +272,8 @@ class _VisitCard extends StatelessWidget {
                 value: visit.comment!,
               ),
             ],
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           ],
         ),
         actions: [

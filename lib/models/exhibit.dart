@@ -4,16 +4,24 @@ class Exhibit {
   final String id;
   final String name;
   final String description;
+<<<<<<< HEAD
   final String? location;
   final String qrCode;
+=======
+  final String location;
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   final DateTime createdAt;
 
   Exhibit({
     required this.id,
     required this.name,
     required this.description,
+<<<<<<< HEAD
     this.location,
     required this.qrCode,
+=======
+    required this.location,
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
     required this.createdAt,
   });
 
@@ -22,8 +30,12 @@ class Exhibit {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
+<<<<<<< HEAD
       location: map['location'],
       qrCode: map['qrCode'] ?? map['id'] ?? '',
+=======
+      location: map['location'] ?? '',
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       createdAt: (map['createdAt'] as Timestamp).toDate(),
     );
   }
@@ -33,8 +45,12 @@ class Exhibit {
       'id': id,
       'name': name,
       'description': description,
+<<<<<<< HEAD
       if (location != null) 'location': location,
       'qrCode': qrCode,
+=======
+      'location': location,
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }
@@ -48,8 +64,11 @@ class ExhibitVisit {
   final DateTime scanTime;
   final DateTime? leaveTime;
   final Duration? duration;
+<<<<<<< HEAD
   final Duration? sessionDuration;
   final String? comment;
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
   ExhibitVisit({
     required this.id,
@@ -59,8 +78,11 @@ class ExhibitVisit {
     required this.scanTime,
     this.leaveTime,
     this.duration,
+<<<<<<< HEAD
     this.sessionDuration,
     this.comment,
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   });
 
   factory ExhibitVisit.fromMap(Map<String, dynamic> map) {
@@ -76,10 +98,13 @@ class ExhibitVisit {
       duration: map['duration'] != null 
           ? Duration(seconds: map['duration']) 
           : null,
+<<<<<<< HEAD
       sessionDuration: map['sessionDuration'] != null 
           ? Duration(seconds: map['sessionDuration']) 
           : null,
       comment: map['comment'],
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
     );
   }
 
@@ -94,8 +119,11 @@ class ExhibitVisit {
           ? Timestamp.fromDate(leaveTime!) 
           : null,
       'duration': duration?.inSeconds,
+<<<<<<< HEAD
       'sessionDuration': sessionDuration?.inSeconds,
       'comment': comment,
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
     };
   }
 }

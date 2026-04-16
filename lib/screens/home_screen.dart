@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:intl/intl.dart';
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/exhibit_provider.dart';
 import '../services/auth_service.dart';
 import '../services/exhibit_service.dart';
+<<<<<<< HEAD
 import 'manage_exhibits_screen.dart';
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 import 'qr_scanner_screen.dart';
 import 'visit_history_screen.dart';
 import 'analytics_screen.dart';
@@ -47,12 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+<<<<<<< HEAD
   void _selectTab(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -71,10 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: IndexedStack(
         index: _currentIndex,
+<<<<<<< HEAD
         children: [
           _MainTab(onTabSelected: _selectTab),
           const VisitHistoryScreen(),
           const AnalyticsScreen(),
+=======
+        children: const [
+          _MainTab(),
+          VisitHistoryScreen(),
+          AnalyticsScreen(),
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -187,9 +203,13 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _MainTab extends StatelessWidget {
+<<<<<<< HEAD
   final ValueChanged<int> onTabSelected;
 
   const _MainTab({required this.onTabSelected});
+=======
+  const _MainTab();
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
   bool _isAdmin(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
@@ -201,9 +221,14 @@ class _MainTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exhibitProvider = Provider.of<ExhibitProvider>(context);
+<<<<<<< HEAD
     final userProvider = Provider.of<UserProvider>(context);
 
     return SingleChildScrollView(
+=======
+
+    return Padding(
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -223,6 +248,7 @@ class _MainTab extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
+<<<<<<< HEAD
                   if (_isAdmin(context))
                     Text(
                       'Signed in as ${userProvider.userData?['displayName'] ?? userProvider.userData?['email'] ?? 'Admin'}',
@@ -234,6 +260,8 @@ class _MainTab extends StatelessWidget {
                     ),
                   if (_isAdmin(context))
                     const SizedBox(height: 8),
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
                   Text(
                     _isAdmin(context) 
                         ? 'Manage exhibition analytics and visitor data.'
@@ -313,10 +341,13 @@ class _MainTab extends StatelessWidget {
           
           const SizedBox(height: 16),
           
+<<<<<<< HEAD
           _buildRecentVisitsSection(exhibitProvider),
           
           const SizedBox(height: 16),
           
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           // Quick actions
           Card(
             child: Column(
@@ -328,7 +359,12 @@ class _MainTab extends StatelessWidget {
                     subtitle: const Text('View your scanned exhibits'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+<<<<<<< HEAD
                       onTabSelected(1);
+=======
+                      // Navigate to history tab
+                      DefaultTabController.of(context)?.animateTo(1);
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
                     },
                   ),
                   const Divider(height: 1),
@@ -339,7 +375,12 @@ class _MainTab extends StatelessWidget {
                   subtitle: Text(_isAdmin(context) ? 'View detailed exhibition analytics' : 'View exhibition statistics'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
+<<<<<<< HEAD
                     onTabSelected(2);
+=======
+                    // Navigate to analytics tab
+                    DefaultTabController.of(context)?.animateTo(2);
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
                   },
                 ),
                 if (_isAdmin(context)) ...[
@@ -350,10 +391,16 @@ class _MainTab extends StatelessWidget {
                     subtitle: const Text('Add or edit exhibition exhibits'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+<<<<<<< HEAD
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const ManageExhibitsScreen(),
                         ),
+=======
+                      // TODO: Navigate to exhibit management
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Exhibit management coming soon!')),
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
                       );
                     },
                   ),
@@ -365,6 +412,7 @@ class _MainTab extends StatelessWidget {
       ),
     );
   }
+<<<<<<< HEAD
 
   Widget _buildRecentVisitsSection(ExhibitProvider exhibitProvider) {
     final visits = exhibitProvider.visitHistory;
@@ -433,6 +481,8 @@ class _MainTab extends StatelessWidget {
       ),
     );
   }
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 }
 
 class _StatCard extends StatelessWidget {
@@ -453,9 +503,15 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
+<<<<<<< HEAD
         color: color.withAlpha((0.1 * 255).round()),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withAlpha((0.3 * 255).round())),
+=======
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       ),
       child: Column(
         children: [

@@ -42,6 +42,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
     }
   }
 
+<<<<<<< HEAD
   Future<void> _loadUserData(dynamic user) async {
     if (user == null) return;
 
@@ -65,6 +66,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
     }
   }
 
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -92,12 +95,16 @@ class _AuthWrapperState extends State<AuthWrapper> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
               final userProvider = Provider.of<UserProvider>(context, listen: false);
+<<<<<<< HEAD
               final currentUser = snapshot.data as dynamic;
               userProvider.setUser(currentUser);
 
               if (userProvider.userData == null || userProvider.userData?['uid'] != currentUser.uid) {
                 _loadUserData(currentUser);
               }
+=======
+              userProvider.setUser(snapshot.data as dynamic);
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
             }
           });
           return const HomeScreen();

@@ -8,7 +8,11 @@ class SimpleQRScreen extends StatefulWidget {
 }
 
 class _SimpleQRScreenState extends State<SimpleQRScreen> {
+<<<<<<< HEAD
   final bool _isScanning = false;
+=======
+  bool _isScanning = false;
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   String? _scannedCode;
 
   @override

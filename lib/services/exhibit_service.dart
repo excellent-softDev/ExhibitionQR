@@ -9,6 +9,7 @@ class ExhibitService {
   final Uuid _uuid = const Uuid();
 
   // Record exhibit visit
+<<<<<<< HEAD
   Future<ExhibitVisit> recordExhibitVisit(
     String exhibitId, {
     DateTime? scanTime,
@@ -37,6 +38,17 @@ class ExhibitService {
       final DateTime visitTime = scanTime ?? DateTime.now();
       final Duration? duration = leaveTime?.difference(visitTime);
       final Duration sessionDuration = visitTime.difference(sessionStartTime);
+=======
+  Future<String> recordExhibitVisit(String exhibitId) async {
+    try {
+      final User? user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('User not authenticated');
+      }
+
+      // Get or create active session
+      String sessionId = await _getOrCreateActiveSession(user.uid);
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
       // Create exhibit visit record
       String visitId = _uuid.v4();
@@ -44,11 +56,16 @@ class ExhibitService {
         id: visitId,
         sessionId: sessionId,
         exhibitId: exhibitId,
+<<<<<<< HEAD
         userId: uid,
         scanTime: visitTime,
         leaveTime: leaveTime,
         duration: duration,
         sessionDuration: sessionDuration,
+=======
+        userId: user.uid,
+        scanTime: DateTime.now(),
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       );
 
       await _firestore
@@ -59,12 +76,17 @@ class ExhibitService {
       // Update analytics
       await _updateExhibitAnalytics(exhibitId);
 
+<<<<<<< HEAD
       return visit;
+=======
+      return visitId;
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
     } catch (e) {
       throw Exception('Failed to record exhibit visit: $e');
     }
   }
 
+<<<<<<< HEAD
   // Update exhibit visit with leave time and comment
   Future<void> updateExhibitVisit(
     String visitId, {
@@ -103,6 +125,8 @@ class ExhibitService {
     }
   }
 
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   // Get or create active session
   Future<String> _getOrCreateActiveSession(String userId) async {
     try {
@@ -141,12 +165,21 @@ class ExhibitService {
   // End user session
   Future<void> endUserSession() async {
     try {
+<<<<<<< HEAD
       final String? uid = _auth.currentUser?.uid;
       if (uid == null) return;
 
       QuerySnapshot activeSessions = await _firestore
           .collection('userSessions')
           .where('userId', isEqualTo: uid)
+=======
+      final User? user = _auth.currentUser;
+      if (user == null) return;
+
+      QuerySnapshot activeSessions = await _firestore
+          .collection('userSessions')
+          .where('userId', isEqualTo: user.uid)
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           .where('isActive', isEqualTo: true)
           .limit(1)
           .get();
@@ -209,6 +242,7 @@ class ExhibitService {
     }
   }
 
+<<<<<<< HEAD
   // Get exhibit by QR code string
   Future<Exhibit?> getExhibitByQrCode(String qrCode) async {
     try {
@@ -270,6 +304,8 @@ class ExhibitService {
     }
   }
 
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   // Get exhibit by ID
   Future<Exhibit?> getExhibitById(String exhibitId) async {
     try {
@@ -289,12 +325,21 @@ class ExhibitService {
   // Get user's visit history
   Future<List<ExhibitVisit>> getUserVisitHistory() async {
     try {
+<<<<<<< HEAD
       final String? uid = _auth.currentUser?.uid;
       if (uid == null) return [];
 
       QuerySnapshot snapshot = await _firestore
           .collection('exhibitVisits')
           .where('userId', isEqualTo: uid)
+=======
+      final User? user = _auth.currentUser;
+      if (user == null) return [];
+
+      QuerySnapshot snapshot = await _firestore
+          .collection('exhibitVisits')
+          .where('userId', isEqualTo: user.uid)
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           .orderBy('scanTime', descending: true)
           .get();
 
@@ -314,7 +359,10 @@ class ExhibitService {
         name: name,
         description: description,
         location: location,
+<<<<<<< HEAD
         qrCode: id,
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
         createdAt: DateTime.now(),
       );
 

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../services/analytics_service.dart';
+<<<<<<< HEAD
+=======
+import '../providers/exhibit_provider.dart';
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({super.key});

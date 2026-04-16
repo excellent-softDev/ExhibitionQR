@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+<<<<<<< HEAD
+=======
+import '../models/exhibit.dart';
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
 class AnalyticsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+<<<<<<< HEAD
   // Clear all analytics data
   Future<void> clearAllAnalyticsData() async {
     try {
@@ -38,6 +43,8 @@ class AnalyticsService {
     }
   }
 
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   // Get most visited exhibits
   Future<List<Map<String, dynamic>>> getMostVisitedExhibits({int limit = 10}) async {
     try {

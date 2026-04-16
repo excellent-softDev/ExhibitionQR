@@ -3,8 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminSetup {
   static Future<void> createDefaultAdmin() async {
+<<<<<<< HEAD
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+=======
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
     // Default admin credentials
     const String username = 'admin';
@@ -15,7 +20,11 @@ class AdminSetup {
     try {
 
       // Check if admin already exists
+<<<<<<< HEAD
       QuerySnapshot existingAdmin = await firestore
+=======
+      QuerySnapshot existingAdmin = await _firestore
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
           .collection('admins')
           .where('username', isEqualTo: username)
           .limit(1)
@@ -29,7 +38,11 @@ class AdminSetup {
       print('Creating default admin user...');
 
       // Create Firebase Auth user
+<<<<<<< HEAD
       UserCredential authResult = await auth.createUserWithEmailAndPassword(
+=======
+      UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
         email: email,
         password: password,
       );
@@ -37,7 +50,11 @@ class AdminSetup {
       print('Firebase Auth user created with UID: ${authResult.user!.uid}');
 
       // Create admin document
+<<<<<<< HEAD
       await firestore.collection('admins').doc(authResult.user!.uid).set({
+=======
+      await _firestore.collection('admins').doc(authResult.user!.uid).set({
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
         'uid': authResult.user!.uid,
         'username': username,
         'password': password, // In production, you should hash this
@@ -50,7 +67,11 @@ class AdminSetup {
       print('Admin document created in Firestore');
 
       // Create user document
+<<<<<<< HEAD
       await firestore.collection('users').doc(authResult.user!.uid).set({
+=======
+      await _firestore.collection('users').doc(authResult.user!.uid).set({
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
         'uid': authResult.user!.uid,
         'email': email,
         'displayName': displayName,
@@ -75,13 +96,21 @@ class AdminSetup {
         print('User already exists in Firebase Auth, creating Firestore documents...');
         try {
           // Sign in with existing user
+<<<<<<< HEAD
           UserCredential authResult = await auth.signInWithEmailAndPassword(
+=======
+          UserCredential authResult = await _auth.signInWithEmailAndPassword(
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
             email: email,
             password: password,
           );
           
           // Create admin document
+<<<<<<< HEAD
           await firestore.collection('admins').doc(authResult.user!.uid).set({
+=======
+          await _firestore.collection('admins').doc(authResult.user!.uid).set({
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
             'uid': authResult.user!.uid,
             'username': username,
             'password': password,
@@ -92,7 +121,11 @@ class AdminSetup {
           });
 
           // Create user document
+<<<<<<< HEAD
           await firestore.collection('users').doc(authResult.user!.uid).set({
+=======
+          await _firestore.collection('users').doc(authResult.user!.uid).set({
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
             'uid': authResult.user!.uid,
             'email': email,
             'displayName': displayName,

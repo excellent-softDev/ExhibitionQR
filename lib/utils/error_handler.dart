@@ -14,6 +14,7 @@ class AppException implements Exception {
 }
 
 class NetworkException extends AppException {
+<<<<<<< HEAD
   NetworkException(super.message, {super.code, super.originalError});
 }
 
@@ -27,6 +28,25 @@ class ValidationException extends AppException {
 
 class DatabaseException extends AppException {
   DatabaseException(super.message, {super.code, super.originalError});
+=======
+  NetworkException(String message, {String? code, dynamic originalError})
+      : super(message, code: code, originalError: originalError);
+}
+
+class AuthException extends AppException {
+  AuthException(String message, {String? code, dynamic originalError})
+      : super(message, code: code, originalError: originalError);
+}
+
+class ValidationException extends AppException {
+  ValidationException(String message, {String? code, dynamic originalError})
+      : super(message, code: code, originalError: originalError);
+}
+
+class DatabaseException extends AppException {
+  DatabaseException(String message, {String? code, dynamic originalError})
+      : super(message, code: code, originalError: originalError);
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 }
 
 class ErrorHandler {

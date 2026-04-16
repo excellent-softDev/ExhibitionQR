@@ -34,11 +34,14 @@ dependencies:
   shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
   
+<<<<<<< HEAD
   # Download & Export
   pdf: ^3.10.7
   image: ^4.1.5
   universal_html: ^2.2.4
   
+=======
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
   # Google Sign-In
   google_sign_in: ^6.2.1
 
@@ -64,9 +67,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+<<<<<<< HEAD
   # assets:
   #   - assets/images/
   #   - assets/icons/
+=======
+  assets:
+    - assets/images/
+    - assets/icons/
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

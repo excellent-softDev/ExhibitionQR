@@ -30,6 +30,7 @@ class AuthService {
     }
   }
 
+<<<<<<< HEAD
   // Admin sign in using Firestore admin credentials
   Future<UserCredential> signInAsAdmin(String username, String password) async {
     try {
@@ -96,10 +97,30 @@ class AuthService {
             'uid': result.user!.uid,
             'email': result.user!.email,
             'displayName': displayName,
+=======
+  // Admin sign in
+  Future<UserCredential> signInAsAdmin(String username, String password) async {
+    try {
+      // For your specific admin setup, use the provided credentials
+      if (username == 'admin' && password == 'admin123') {
+        // Use the specific Firebase Auth user you created
+        try {
+          UserCredential result = await _auth.signInWithEmailAndPassword(
+            email: 'admin@exhibition.com', // Your admin email
+            password: 'admin123', // Your admin password
+          );
+
+          // Update user document to mark as admin
+          await _firestore.collection('users').doc(result.user!.uid).set({
+            'uid': result.user!.uid,
+            'email': result.user!.email,
+            'displayName': 'Exhibition Admin',
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
             'isAnonymous': false,
             'isAdmin': true,
             'createdAt': FieldValue.serverTimestamp(),
             'lastLoginAt': FieldValue.serverTimestamp(),
+<<<<<<< HEAD
           });
 
           return result;
@@ -110,6 +131,60 @@ class AuthService {
         }
 
         rethrow;
+=======
+          }, SetOptions(merge: true));
+
+          // Also update/create admin document
+          await _firestore.collection('admins').doc(result.user!.uid).set({
+            'uid': result.user!.uid,
+            'username': username,
+            'password': password,
+            'email': 'admin@exhibition.com',
+            'displayName': 'Exhibition Admin',
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastLoginAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
+          
+          return result;
+        } catch (authError) {
+          // If user doesn't exist in Firebase Auth, create it
+          if (authError.toString().contains('user-not-found') || 
+              authError.toString().contains('wrong-password')) {
+            UserCredential result = await _auth.createUserWithEmailAndPassword(
+              email: 'admin@exhibition.com',
+              password: 'admin123',
+            );
+
+            // Create admin document
+            await _firestore.collection('admins').doc(result.user!.uid).set({
+              'uid': result.user!.uid,
+              'username': username,
+              'password': password,
+              'email': 'admin@exhibition.com',
+              'displayName': 'Exhibition Admin',
+              'createdAt': FieldValue.serverTimestamp(),
+              'lastLoginAt': FieldValue.serverTimestamp(),
+            });
+
+            // Create user document
+            await _firestore.collection('users').doc(result.user!.uid).set({
+              'uid': result.user!.uid,
+              'email': result.user!.email,
+              'displayName': 'Exhibition Admin',
+              'isAnonymous': false,
+              'isAdmin': true,
+              'createdAt': FieldValue.serverTimestamp(),
+              'lastLoginAt': FieldValue.serverTimestamp(),
+            });
+            
+            return result;
+          } else {
+            throw authError;
+          }
+        }
+      } else {
+        throw Exception('Invalid admin credentials');
+>>>>>>> 7ccc8a6285d662f9bcf39fa1edc311b491fd0dc5
       }
     } catch (e) {
       throw Exception('Failed to sign in as admin: $e');

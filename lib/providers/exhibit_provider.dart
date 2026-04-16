@@ -49,6 +49,23 @@ class ExhibitProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateVisit(ExhibitVisit updatedVisit) {
+    int index = _visitHistory.indexWhere((visit) => visit.id == updatedVisit.id);
+    if (index != -1) {
+      _visitHistory[index] = updatedVisit;
+      notifyListeners();
+    }
+  }
+
+  void clearAllData() {
+    _exhibits = [];
+    _visitHistory = [];
+    _analytics = {};
+    _isLoading = false;
+    _error = null;
+    notifyListeners();
+  }
+
   void updateExhibit(Exhibit updatedExhibit) {
     int index = _exhibits.indexWhere((exhibit) => exhibit.id == updatedExhibit.id);
     if (index != -1) {

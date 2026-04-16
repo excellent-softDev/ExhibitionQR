@@ -181,6 +181,24 @@ class _VisitCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+            if (visit.sessionDuration != null)
+              Text(
+                'Total time: ${_formatDuration(visit.sessionDuration)}',
+                style: TextStyle(
+                  color: Colors.blue[600],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            if (visit.comment != null && visit.comment!.isNotEmpty)
+              Text(
+                'Comment: ${visit.comment}',
+                style: TextStyle(
+                  color: Colors.purple[600],
+                  fontStyle: FontStyle.italic,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
           ],
         ),
         trailing: const Icon(Icons.chevron_right),
@@ -234,6 +252,20 @@ class _VisitCard extends StatelessWidget {
               _DetailRow(
                 label: 'Duration',
                 value: _formatDuration(visit.duration),
+              ),
+            ],
+            if (visit.sessionDuration != null) ...[
+              const SizedBox(height: 8),
+              _DetailRow(
+                label: 'Total Time',
+                value: _formatDuration(visit.sessionDuration),
+              ),
+            ],
+            if (visit.comment != null && visit.comment!.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              _DetailRow(
+                label: 'Comment',
+                value: visit.comment!,
               ),
             ],
           ],

@@ -3,6 +3,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AnalyticsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Clear all analytics data
+  Future<void> clearAllAnalyticsData() async {
+    try {
+      // Clear exhibit analytics
+      QuerySnapshot analyticsSnapshot = await _firestore
+          .collection('exhibitAnalytics')
+          .get();
+
+      for (var doc in analyticsSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // Clear exhibit visits
+      QuerySnapshot visitsSnapshot = await _firestore
+          .collection('exhibitVisits')
+          .get();
+
+      for (var doc in visitsSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // Clear user sessions
+      QuerySnapshot sessionsSnapshot = await _firestore
+          .collection('userSessions')
+          .get();
+
+      for (var doc in sessionsSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+    } catch (e) {
+      throw Exception('Failed to clear analytics data: $e');
+    }
+  }
+
   // Get most visited exhibits
   Future<List<Map<String, dynamic>>> getMostVisitedExhibits({int limit = 10}) async {
     try {

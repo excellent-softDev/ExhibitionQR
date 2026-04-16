@@ -20,8 +20,23 @@ class ExhibitService {
       // Get or create active session
       String sessionId = await _getOrCreateActiveSession(uid);
 
+      // Get session start time
+      DocumentSnapshot sessionDoc = await _firestore
+          .collection('userSessions')
+          .doc(sessionId)
+          .get();
+
+      DateTime sessionStartTime;
+      if (sessionDoc.exists) {
+        Map<String, dynamic> sessionData = sessionDoc.data() as Map<String, dynamic>;
+        sessionStartTime = (sessionData['startTime'] as Timestamp).toDate();
+      } else {
+        sessionStartTime = DateTime.now(); // Fallback
+      }
+
       final DateTime visitTime = scanTime ?? DateTime.now();
       final Duration? duration = leaveTime?.difference(visitTime);
+      final Duration sessionDuration = visitTime.difference(sessionStartTime);
 
       // Create exhibit visit record
       String visitId = _uuid.v4();
@@ -33,6 +48,7 @@ class ExhibitService {
         scanTime: visitTime,
         leaveTime: leaveTime,
         duration: duration,
+        sessionDuration: sessionDuration,
       );
 
       await _firestore
@@ -46,6 +62,44 @@ class ExhibitService {
       return visit;
     } catch (e) {
       throw Exception('Failed to record exhibit visit: $e');
+    }
+  }
+
+  // Update exhibit visit with leave time and comment
+  Future<void> updateExhibitVisit(
+    String visitId, {
+    DateTime? leaveTime,
+    String? comment,
+  }) async {
+    try {
+      Map<String, dynamic> updates = {};
+      
+      if (leaveTime != null) {
+        updates['leaveTime'] = Timestamp.fromDate(leaveTime);
+        // Calculate duration
+        DocumentSnapshot visitDoc = await _firestore
+            .collection('exhibitVisits')
+            .doc(visitId)
+            .get();
+        
+        if (visitDoc.exists) {
+          Map<String, dynamic> visitData = visitDoc.data() as Map<String, dynamic>;
+          DateTime scanTime = (visitData['scanTime'] as Timestamp).toDate();
+          Duration duration = leaveTime.difference(scanTime);
+          updates['duration'] = duration.inSeconds;
+        }
+      }
+      
+      if (comment != null) {
+        updates['comment'] = comment;
+      }
+
+      await _firestore
+          .collection('exhibitVisits')
+          .doc(visitId)
+          .update(updates);
+    } catch (e) {
+      throw Exception('Failed to update exhibit visit: $e');
     }
   }
 

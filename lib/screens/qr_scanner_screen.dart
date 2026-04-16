@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../models/exhibit.dart';
 import '../providers/exhibit_provider.dart';
 import '../services/exhibit_service.dart';
+import 'exhibit_detail_screen.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
@@ -49,7 +50,14 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
       exhibitProvider.addVisit(visit);
 
       if (mounted) {
-        _showSuccessDialog(exhibit);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ExhibitDetailScreen(
+              exhibit: exhibit!,
+              visit: visit,
+            ),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -63,46 +71,6 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         });
       }
     }
-  }
-
-  void _showSuccessDialog(Exhibit exhibit) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: const [
-            Icon(Icons.check_circle, color: Colors.green),
-            SizedBox(width: 8),
-            Text('Exhibit Matched'),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              exhibit.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text('Location: ${exhibit.location ?? 'Not specified'}'),
-            const SizedBox(height: 8),
-            Text('QR Code: ${exhibit.qrCode}'),
-            const SizedBox(height: 12),
-            const Text(
-              'This exhibit visit was recorded successfully. Continue scanning to track more exhibits.',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Scan Another'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _showErrorDialog(String error) {

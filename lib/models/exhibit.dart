@@ -48,6 +48,8 @@ class ExhibitVisit {
   final DateTime scanTime;
   final DateTime? leaveTime;
   final Duration? duration;
+  final Duration? sessionDuration;
+  final String? comment;
 
   ExhibitVisit({
     required this.id,
@@ -57,6 +59,8 @@ class ExhibitVisit {
     required this.scanTime,
     this.leaveTime,
     this.duration,
+    this.sessionDuration,
+    this.comment,
   });
 
   factory ExhibitVisit.fromMap(Map<String, dynamic> map) {
@@ -72,6 +76,10 @@ class ExhibitVisit {
       duration: map['duration'] != null 
           ? Duration(seconds: map['duration']) 
           : null,
+      sessionDuration: map['sessionDuration'] != null 
+          ? Duration(seconds: map['sessionDuration']) 
+          : null,
+      comment: map['comment'],
     );
   }
 
@@ -86,6 +94,8 @@ class ExhibitVisit {
           ? Timestamp.fromDate(leaveTime!) 
           : null,
       'duration': duration?.inSeconds,
+      'sessionDuration': sessionDuration?.inSeconds,
+      'comment': comment,
     };
   }
 }

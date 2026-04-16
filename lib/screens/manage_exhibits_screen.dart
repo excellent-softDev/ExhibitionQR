@@ -203,6 +203,8 @@ class _ManageExhibitsScreenState extends State<ManageExhibitsScreen> {
                       _showEditDialog(exhibit);
                     } else if (value == 'delete') {
                       _showDeleteDialog(exhibit);
+                    } else if (value == 'download') {
+                      _showDownloadOptions(exhibit);
                     }
                   },
                   itemBuilder: (context) => [
@@ -213,6 +215,16 @@ class _ManageExhibitsScreenState extends State<ManageExhibitsScreen> {
                           Icon(Icons.edit, size: 20),
                           SizedBox(width: 8),
                           Text('Edit'),
+                        ],
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: 'download',
+                      child: Row(
+                        children: [
+                          Icon(Icons.download, size: 20),
+                          SizedBox(width: 8),
+                          Text('Download'),
                         ],
                       ),
                     ),
@@ -402,6 +414,156 @@ class _ManageExhibitsScreenState extends State<ManageExhibitsScreen> {
         ],
       ),
     );
+  }
+
+  void _showDownloadOptions(Exhibit exhibit) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Download Exhibit'),
+        content: const Text('Choose format:'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _downloadAsImage(exhibit, 'png');
+            },
+            child: const Text('PNG'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _downloadAsImage(exhibit, 'jpeg');
+            },
+            child: const Text('JPEG'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _downloadAsPDF(exhibit);
+            },
+            child: const Text('PDF'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _downloadAsImage(Exhibit exhibit, String format) async {
+    try {
+      // Generate QR code image
+      final qrPainter = QrPainter(
+        data: exhibit.qrCode,
+        version: QrVersions.auto,
+        gapless: true,
+        color: const Color(0xff000000),
+        emptyColor: const Color(0xffffffff),
+      );
+
+      final picData = await qrPainter.toImageData(200);
+      final imageBytes = picData?.buffer.asUint8List();
+
+      if (imageBytes == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to generate image')),
+        );
+        return;
+      }
+
+      final filename = '${exhibit.name.replaceAll(' ', '_')}_QR.$format';
+      _downloadFile(imageBytes, filename);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Downloaded as $format')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error downloading image: $e')),
+      );
+    }
+  }
+
+  Future<void> _downloadAsPDF(Exhibit exhibit) async {
+    try {
+      final pdf = pw.Document();
+
+      // Generate QR code image
+      final qrPainter = QrPainter(
+        data: exhibit.qrCode,
+        version: QrVersions.auto,
+        gapless: true,
+        color: const Color(0xff000000),
+        emptyColor: const Color(0xffffffff),
+      );
+
+      final picData = await qrPainter.toImageData(300);
+      final imageBytes = picData?.buffer.asUint8List();
+
+      if (imageBytes == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to generate QR code')),
+        );
+        return;
+      }
+
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Text(
+                  exhibit.name,
+                  style: pw.TextStyle(
+                    fontSize: 24,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.SizedBox(height: 20),
+                pw.Text(exhibit.description),
+                pw.SizedBox(height: 30),
+                pw.Text(
+                  'QR Code:',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                pw.SizedBox(height: 10),
+                pw.Image(pw.MemoryImage(imageBytes), width: 300, height: 300),
+                pw.SizedBox(height: 20),
+                pw.Text(
+                  'Code: ${exhibit.qrCode}',
+                  style: const pw.TextStyle(fontSize: 12),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+
+      final pdfBytes = await pdf.save();
+      final filename = '${exhibit.name.replaceAll(' ', '_')}_QR.pdf';
+      _downloadFile(Uint8List.fromList(pdfBytes), filename);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Downloaded as PDF')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error downloading PDF: $e')),
+      );
+    }
+  }
+
+  void _downloadFile(Uint8List bytes, String filename) {
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute('download', filename)
+      ..click();
+    html.Url.revokeObjectUrl(url);
   }
 
   @override
